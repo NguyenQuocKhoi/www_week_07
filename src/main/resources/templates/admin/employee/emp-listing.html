@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  div.inline {
+    color: black;
+    float: none;
+    padding: 5px 5px;
+    display: inline-block;
+  }
+  div.inline a.active {
+    background-color: #FBD603;
+    border:1px solid darkred;
+  }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>Employees with pagination</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container p-4">
+<h1 class="text-center">LIST OF EMPLOYEE</h1>
+  <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>ADDRESS</th>
+        <th>DOB</th>
+        <th>EMAIL</th>
+        <th>FULL_NAME</th>
+        <th>PHONE</th>
+        <th>STATUS</th>
+
+        <th colspan="2"><a href="/show-add-formEmployee" type="button" class="btn btn-success">New Employee</a></th>
+      </tr>
+    <tbody>
+    <tr th:each="emp, iStas: ${employeePage.content}">
+      <td th:text="${emp.emp_id}"></td>
+      <td th:text="${emp.address}"></td>
+      <td th:text="${emp.dob}"></td>
+      <td th:text="${emp.email}"></td>
+      <td th:text="${emp.fullname}"></td>
+      <td th:text="${emp.phone}"></td>
+      <td th:text="${emp.status}"></td>
+      <td><a class="btn btn-primary" th:href="@{employees/show-edit-form/{id}(id=${emp.emp_id})}">Edit</a></td>
+      <td><a class="btn btn-danger" th:href="@{employees/delete/{id}(id=${emp.emp_id})}">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="inline" th:if="${employeePage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
+  <a th:href="@{/employees(size=${employeePage.size}, page=${pageNumber})}"
+     th:text="${pageNumber}"
+     th:class="${pageNumber==employeePage.number + 1} ? active"></a>
+</div>
+</body>
+</html>
