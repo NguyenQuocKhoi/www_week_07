@@ -32,7 +32,7 @@ public class CustomerController {
       @RequestParam("page") Optional<Integer> page,
       @RequestParam("size") Optional<Integer> size) {
     int currentPage = page.orElse(1);
-    int pageSize = size.orElse(10);
+    int pageSize = size.orElse(5);
 
     Page<Customer> customerPage = customerService.findPaginated(currentPage - 1,
         pageSize, "name", "asc");
