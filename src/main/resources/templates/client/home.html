@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+    <table style="width: 70%; align-self: center; border: 1px">
+      <thead>
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td></td>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product:${products}">
+        <td th:text="${product.product_id}"></td>
+        <td th:text="${product.name}"></td>
+        <td> <a th:href="@{/buy/{id}(id=${product.product_id})}">Buy</a></td>
+      </tr>
+      </tbody>
+    </table>
+
+<p>
+
+  <a th:href="@{checkout}">CheckOut</a>
+</p>
+</body>
+</html>

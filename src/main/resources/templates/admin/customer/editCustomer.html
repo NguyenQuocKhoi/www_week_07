@@ -18,9 +18,10 @@
   </style>
 </head>
 <body>
-<h1 th:align="center">ADD NEW CUSTOMER</h1>
+<h1 th:align="center">UPDATE CUSTOMER</h1>
 <div class="x">
-  <form action="#" th:action="@{/customers/add}" th:object="${customer}" method="post">
+  <form action="#" th:action="@{/admin/customer/editCustomer}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{id}">
     <div class="row mb-3">
       <label for="name" class="col-sm-3 ">Name</label>
       <div class="col-12">
@@ -51,7 +52,7 @@
 
     <br/>
     <div class="d-grid gap-1 col-3 mx-auto">
-      <input class="btn btn-primary" type="submit" value="Add">
+      <input class="btn btn-primary" type="submit" value="Update">
     </div>
   </form>
 </div>

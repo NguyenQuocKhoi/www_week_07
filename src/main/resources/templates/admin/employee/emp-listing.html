@@ -42,7 +42,7 @@
       <td th:text="${emp.fullname}"></td>
       <td th:text="${emp.phone}"></td>
       <td th:text="${emp.status}"></td>
-      <td><a class="btn btn-primary" th:href="@{employees/show-edit-form/{id}(id=${emp.emp_id})}">Edit</a></td>
+      <td><a class="btn btn-primary" th:href="@{/employees/show-edit-form/{id}(id=${emp.emp_id})}">Edit</a></td>
       <td><a class="btn btn-danger" th:href="@{employees/delete/{id}(id=${emp.emp_id})}">Delete</a></td>
     </tr>
     </tbody>

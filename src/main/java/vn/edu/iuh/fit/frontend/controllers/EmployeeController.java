@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.backend.models.Employee;
 import vn.edu.iuh.fit.backend.repositories.EmployeeRepository;
 import vn.edu.iuh.fit.backend.services.EmployeeService;
@@ -26,6 +27,7 @@ public class EmployeeController {
 
   @Autowired
   private EmployeeRepository employeeRepository;
+
 
 
   @GetMapping("/employees")
@@ -62,6 +64,7 @@ public class EmployeeController {
   public String addEmployee(
       @ModelAttribute("employee") Employee employee,
       BindingResult result, Model model) {
+
     employeeRepository.save(employee);
     return "redirect:/employees";
   }
@@ -70,6 +73,33 @@ public class EmployeeController {
   public String deleteEmp(@PathVariable("id") long id){
     Employee employee = employeeRepository.findById(id).orElse(new Employee());
     employeeRepository.delete(employee);
+    return "redirect:/employees";
+  }
+
+  @GetMapping("/employees/show-edit-form/{id}")
+  public String showUpdateForm(@PathVariable("id") long id, Model model) {
+    Employee employee = employeeRepository.findById(id).orElse(null);
+    model.addAttribute("employee", employee);
+    return "admin/employee/editEmp";
+  }
+
+//  @GetMapping("/show-edit-form/{id}")
+//  public ModelAndView edit(@PathVariable("id") long id) {
+//    ModelAndView modelAndView = new ModelAndView();
+//    Optional<Employee> opt = employeeRepository.findById(id);
+//    if(opt.isPresent()) {
+//      Employee employee = opt.get();
+//      modelAndView.addObject("employee",employee);
+//      modelAndView.setViewName("admin/employee/editEmp");
+//    }
+//    return modelAndView;
+//  }
+  @PostMapping("admin/employee/editEmp")
+  public String update(
+      @ModelAttribute("employee") Employee employee,
+      BindingResult result, Model model) {
+
+    employeeRepository.save(employee);
     return "redirect:/employees";
   }
 }
