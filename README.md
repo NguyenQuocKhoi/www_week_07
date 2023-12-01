@@ -40,3 +40,8 @@ Cập nhật khách hàng:
 
 ![image](https://github.com/NguyenQuocKhoi/www_week_07/assets/98084575/f53082e0-a73b-41b8-a83e-15ca49b84040)
 
+Trang Home:
+
+![image](https://github.com/NguyenQuocKhoi/www_week_07/assets/98084575/5e066ceb-38f4-4713-b3ff-adfb0eb88cfd)
+
+
