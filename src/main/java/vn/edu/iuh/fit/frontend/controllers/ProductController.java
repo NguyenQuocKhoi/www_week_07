@@ -179,7 +179,7 @@ public class ProductController {
     List<CartItem> list = new ArrayList<>(cart.values());
     model.addAttribute("selProduct", cart);
 
-    return "checkout1";
+    return "client/checkout1";
   }
 
 }
