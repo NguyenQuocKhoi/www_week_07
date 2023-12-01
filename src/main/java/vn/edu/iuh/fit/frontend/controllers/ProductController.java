@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.backend.dto.CartItem;
-import vn.edu.iuh.fit.backend.models.Employee;
 import vn.edu.iuh.fit.backend.models.Product;
 import vn.edu.iuh.fit.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.backend.services.ProductService;
@@ -90,11 +89,59 @@ public class ProductController {
   }
 
   @GetMapping("/home")
-  public String home(Model model, HttpSession session) {
+  public String showProductListPaging(
+      HttpSession session,
+      Model model,
+      @RequestParam("page") Optional<Integer> page,
+      @RequestParam("size") Optional<Integer> size) {
+    int currentPage = page.orElse(1);
+    int pageSize = size.orElse(12);
+
+    Page<Product> candidatePage = productServices.findPaginated(currentPage - 1,
+        pageSize, "name", "asc");
     List<Product> products = productRepository.findAll();
     model.addAttribute("products", products);
+    model.addAttribute("productPage", candidatePage);
+
+    int totalPages = candidatePage.getTotalPages();
+    if (totalPages > 0) {
+      List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+          .boxed()
+          .collect(Collectors.toList());
+      model.addAttribute("pageNumbers", pageNumbers);
+    }
+    //them so phan tu co trong cart
+//        model.addAttribute("itemsOnCart", 0);
     return "client/home";
   }
+//  public String home(
+////      Model model, HttpSession session) {
+////
+////    List<Product> products = productRepository.findAll();
+////    model.addAttribute("products", products);
+////    return "client/home";
+//
+//    Model model,
+//    @RequestParam("page") Optional<Integer> page,
+//    @RequestParam("size") Optional<Integer> size) {
+//      int currentPage = page.orElse(1);
+//      int pageSize = size.orElse(5);
+//
+//      Page<Product> productPage = productServices.findPaginated(currentPage - 1,
+//          pageSize, "name", "asc");
+//
+//      model.addAttribute("productPage1", productPage);
+//    List<Product> products = productRepository.findAll();
+//    model.addAttribute("products", products);
+//      int totalPages = productPage.getTotalPages();
+//      if (totalPages > 0) {
+//        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+//            .boxed()
+//            .collect(Collectors.toList());
+//        model.addAttribute("pageNumbers1", pageNumbers);
+//      }
+//      return "client/home";
+//  }
 
   @GetMapping("/buy/{id}")
   public String buy(Model model, HttpSession session,
@@ -112,7 +159,7 @@ public class ProductController {
     Product selProduct = productRepository.findById(id).get();
 
     int quan = cartItemMap.get(selProduct.getProduct_id()) == null ? 1 //chua mua san pham nay
-        : cartItemMap.get(selProduct.getProduct_id()).getQuantity() + 1; //da san pham nay --> tang so luong
+        : cartItemMap.get(selProduct.getProduct_id()).getAmount() + 1; //da san pham nay --> tang so luong
     CartItem item = new CartItem(selProduct, quan);
 
     cartItemMap.put(selProduct.getProduct_id(), item);
@@ -132,6 +179,7 @@ public class ProductController {
     List<CartItem> list = new ArrayList<>(cart.values());
     model.addAttribute("selProduct", cart);
 
-    return "client/checkout";
+    return "checkout1";
   }
+
 }

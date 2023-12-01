@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.dto;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,9 @@ import vn.edu.iuh.fit.backend.models.Product;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItem {
+public class CartItem implements Serializable {
 private Product product;
-private int quantity;
+private int amount;
 
 
 }

@@ -40,7 +40,7 @@
 </style>
 <body>
 <div class="container p-4">
-  <h1 class="text-center">LIST OF EMPLOYEE</h1>
+  <h1 class="text-center">LIST OF CUSTOMER</h1>
   <table class="table table-striped">
     <tr>
       <th>ID</th>
@@ -48,7 +48,7 @@
       <th>EMAIL</th>
       <th>CUS_NAME</th>
       <th>PHONE</th>
-      <th colspan="2"><a href="/show-add-formCustomer" type="button" class="btn btn-success">New Employee</a></th>
+      <th colspan="2"><a href="/show-add-formCustomer" type="button" class="btn btn-success">New Customer</a></th>
     </tr>
     <tbody>
     <tr th:each="customer, iStas: ${customerPage.content}">
